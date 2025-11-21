@@ -1,5 +1,7 @@
 <?php
 
+use StanleyKinkelaar\LaravelBrowserSessionsLite;
+
 arch('it will not use debugging functions')
-    ->expect(['dd', 'dump', 'ray'])
-    ->each->not->toBeUsed();
+    ->expect('StanleyKinkelaar\LaravelBrowserSessionsLite')
+    ->not->toUse(['dd', 'dump', 'ray']);
