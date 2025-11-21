@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace StanleyKinkelaar\LaravelBrowserSessionsLite\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelBrowserSessionsLiteCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-browser-sessions-lite';
 
     public $description = 'My command';
 
