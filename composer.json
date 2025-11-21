@@ -1,10 +1,14 @@
 {
     "name": "stanleykinkelaar/laravel-browser-sessions-lite",
-    "description": "This is my package laravel-browser-sessions-lite",
+    "description": "A lightweight, zero-dependency Laravel package for managing browser sessions with device detection and secure logout",
     "keywords": [
         "Stanley Kinkelaar",
         "laravel",
-        "laravel-browser-sessions-lite"
+        "browser-sessions",
+        "session-management",
+        "device-detection",
+        "security",
+        "authentication"
     ],
     "homepage": "https://github.com/stanleykinkelaar/laravel-browser-sessions-lite",
     "license": "MIT",
@@ -16,9 +20,9 @@
         }
     ],
     "require": {
-        "php": "^8.3",
+        "php": "^8.2|^8.3|^8.4",
         "spatie/laravel-package-tools": "^1.16",
-        "illuminate/contracts": "^11.0||^12.0"
+        "illuminate/contracts": "^10.0|^11.0|^12.0"
     },
     "require-dev": {
         "laravel/pint": "^1.14",
