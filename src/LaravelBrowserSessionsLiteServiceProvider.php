@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton;
+namespace StanleyKinkelaar\LaravelBrowserSessionsLite;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use VendorName\Skeleton\Commands\SkeletonCommand;
+use StanleyKinkelaar\LaravelBrowserSessionsLite\Commands\LaravelBrowserSessionsLiteCommand;
 
-class SkeletonServiceProvider extends PackageServiceProvider
+class LaravelBrowserSessionsLiteServiceProvider extends PackageServiceProvider
 {
     public function configurePackage(Package $package): void
     {
@@ -16,10 +16,10 @@ class SkeletonServiceProvider extends PackageServiceProvider
          * More info: https://github.com/spatie/laravel-package-tools
          */
         $package
-            ->name('skeleton')
+            ->name('laravel-browser-sessions-lite')
             ->hasConfigFile()
             ->hasViews()
-            ->hasMigration('create_migration_table_name_table')
-            ->hasCommand(SkeletonCommand::class);
+            ->hasMigration('create_browser_sessions_table')
+            ->hasCommand(LaravelBrowserSessionsLiteCommand::class);
     }
 }
