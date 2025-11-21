@@ -2,4 +2,12 @@
 
 namespace StanleyKinkelaar\LaravelBrowserSessionsLite;
 
-class LaravelBrowserSessionsLite {}
+use StanleyKinkelaar\LaravelBrowserSessionsLite\Services\BrowserSessions;
+
+/**
+ * Facade accessor for the BrowserSessions service.
+ */
+class LaravelBrowserSessionsLite extends BrowserSessions
+{
+    //
+}
