@@ -34,15 +34,37 @@ it('lists all sessions for authenticated user', function () {
 });
 
 it('identifies current session correctly', function () {
-    insertSessionsForUser($this->user->id);
-
     $this->actingAs($this->user);
+
+    // Get the actual current session ID from Laravel
+    $currentSessionId = session()->getId();
+
+    // Insert sessions including one with the current session ID
+    DB::table('sessions')->insert([
+        [
+            'id' => $currentSessionId, // This should be marked as current
+            'user_id' => $this->user->id,
+            'ip_address' => '127.0.0.1',
+            'user_agent' => 'Mozilla/5.0 (Current)',
+            'payload' => '',
+            'last_activity' => now()->timestamp,
+        ],
+        [
+            'id' => 'other-session',
+            'user_id' => $this->user->id,
+            'ip_address' => '192.168.1.1',
+            'user_agent' => 'Mozilla/5.0 (Other)',
+            'payload' => '',
+            'last_activity' => now()->subHour()->timestamp,
+        ],
+    ]);
 
     $sessions = $this->service->listForCurrentUser();
 
     $currentSessions = $sessions->where('is_current', true);
 
-    expect($currentSessions)->toHaveCount(1);
+    expect($currentSessions)->toHaveCount(1)
+        ->and($currentSessions->first()['id'])->toBe($currentSessionId);
 });
 
 it('orders sessions by last activity descending', function () {
@@ -156,7 +178,7 @@ it('returns formatted last active time', function () {
 // Helper functions
 function createTestUser()
 {
-    return new class
+    return new class implements \Illuminate\Contracts\Auth\Authenticatable
     {
         public int $id = 1;
 
@@ -169,9 +191,48 @@ function createTestUser()
             $this->password = Hash::make('password');
         }
 
+        public function getAuthIdentifierName()
+        {
+            return 'id';
+        }
+
         public function getAuthIdentifier()
         {
             return $this->id;
+        }
+
+        public function getAuthPassword()
+        {
+            return $this->password;
+        }
+
+        public function getRememberToken()
+        {
+            return null;
+        }
+
+        public function setRememberToken($value)
+        {
+            //
+        }
+
+        public function getRememberTokenName()
+        {
+            return null;
+        }
+
+        public function getAuthPasswordName()
+        {
+            return 'password';
+        }
+
+        public function forceFill(array $attributes)
+        {
+            foreach ($attributes as $key => $value) {
+                $this->{$key} = $value;
+            }
+
+            return $this;
         }
     };
 }

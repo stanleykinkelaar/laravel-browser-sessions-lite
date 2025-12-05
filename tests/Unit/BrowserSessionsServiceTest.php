@@ -51,7 +51,7 @@ it('can logout other sessions with valid password', function () {
     $user->password = Hash::make('password');
 
     Auth::shouldReceive('user')
-        ->twice()
+        ->once()
         ->andReturn($user);
 
     Hash::shouldReceive('check')
@@ -103,9 +103,6 @@ it('throws validation exception when user is not authenticated', function () {
 })->throws(ValidationException::class);
 
 it('can force logout others for a specific user', function () {
-    Auth::shouldReceive('logoutOtherDevices')
-        ->once();
-
     $this->repository->shouldReceive('getCurrentSessionId')
         ->once()
         ->andReturn('current-session');

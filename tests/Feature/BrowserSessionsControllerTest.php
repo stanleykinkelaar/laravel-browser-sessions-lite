@@ -139,7 +139,7 @@ it('returns json response when destroying sessions via api', function () {
 // Helper function to create a test user
 function createUser()
 {
-    return new class
+    return new class implements \Illuminate\Contracts\Auth\Authenticatable
     {
         public int $id = 1;
 
@@ -152,9 +152,53 @@ function createUser()
             $this->password = Hash::make('password');
         }
 
+        public function getAuthIdentifierName()
+        {
+            return 'id';
+        }
+
         public function getAuthIdentifier()
         {
             return $this->id;
+        }
+
+        public function getAuthPassword()
+        {
+            return $this->password;
+        }
+
+        public function getRememberToken()
+        {
+            return null;
+        }
+
+        public function setRememberToken($value)
+        {
+            //
+        }
+
+        public function getRememberTokenName()
+        {
+            return null;
+        }
+
+        public function getAuthPasswordName()
+        {
+            return 'password';
+        }
+
+        public function forceFill(array $attributes)
+        {
+            foreach ($attributes as $key => $value) {
+                $this->{$key} = $value;
+            }
+
+            return $this;
+        }
+
+        public function save()
+        {
+            return true;
         }
     };
 }

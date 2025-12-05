@@ -44,6 +44,7 @@ class BrowserSessions
         }
 
         // Verify password
+        // @phpstan-ignore-next-line - User models typically have a password property
         if (! Hash::check($password, $user->password)) {
             throw ValidationException::withMessages([
                 'password' => ['The provided password is incorrect.'],

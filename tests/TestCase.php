@@ -56,4 +56,12 @@ class TestCase extends Orchestra
             $table->timestamps();
         });
     }
+
+    protected function defineRoutes($router)
+    {
+        // Define a login route for testing auth middleware redirects
+        $router->get('/login', function () {
+            return 'Login Page';
+        })->name('login');
+    }
 }

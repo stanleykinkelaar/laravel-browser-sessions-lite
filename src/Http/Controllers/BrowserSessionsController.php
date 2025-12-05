@@ -29,7 +29,10 @@ class BrowserSessionsController
             ]);
         }
 
-        return view('browser-sessions-lite::browser-sessions', [
+        /** @var view-string $viewName */
+        $viewName = 'browser-sessions-lite::browser-sessions';
+
+        return view($viewName, [
             'sessions' => $sessions,
         ]);
     }
