@@ -8,13 +8,13 @@
 > **Ever wondered who's logged into your app right now?** 🤔
 > This lightweight Laravel package lets users see all their active browser sessions and securely log out suspicious ones—all without the bloat of heavy device detection libraries.
 
-Perfect for apps that need Jetstream-style session management but want to keep it simple, fast, and dependency-free.
+Perfect for apps that need Jetstream-style session management but want to keep it simple and fast.
 
 ---
 
 ## ✨ Features
 
-- 📱 **Zero Dependencies** - No external device detection libraries (bye bye, jenssegers/agent!)
+- 📱 **No Device Detection Libraries** - Lightweight regex-based detection without heavy dependencies
 - 🔒 **Secure by Default** - Password-verified logout prevents accidental lockouts
 - 🎨 **Beautiful UI** - Jetstream-inspired Blade view with Tailwind CSS
 - 🌐 **JSON API Ready** - Full REST API support for SPAs and mobile apps
@@ -252,7 +252,7 @@ curl -X DELETE https://your-app.com/user/browser-sessions/others \
 
 ## 🔍 Device Detection
 
-The package uses **simple regex patterns** for device hints (zero dependencies, zero bloat):
+The package uses **simple regex patterns** for device hints (no external libraries, zero bloat):
 
 | User Agent Contains | Device Hint Shown |
 |---------------------|-------------------|
@@ -373,7 +373,7 @@ class BrowserSessions extends Component
 
 ---
 
-## 🤔 Why Zero Dependencies?
+## 🤔 Why No Device Detection Libraries?
 
 This package **intentionally avoids** external device detection libraries like `jenssegers/agent` or `mobiledetect/mobiledetectlib` because:
 
