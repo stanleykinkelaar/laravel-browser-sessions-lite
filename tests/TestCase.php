@@ -27,11 +27,41 @@ class TestCase extends Orchestra
     public function getEnvironmentSetUp($app)
     {
         config()->set('database.default', 'testing');
+        config()->set('database.connections.testing', [
+            'driver' => 'sqlite',
+            'database' => ':memory:',
+            'prefix' => '',
+        ]);
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/../database/migrations') as $migration) {
-            (include $migration->getRealPath())->up();
-         }
-         */
+        // Set session driver to database for testing
+        config()->set('session.driver', 'database');
+        config()->set('session.table', 'sessions');
+
+        // Create sessions table
+        $app['db']->connection()->getSchemaBuilder()->create('sessions', function ($table) {
+            $table->string('id')->primary();
+            $table->foreignId('user_id')->nullable()->index();
+            $table->string('ip_address', 45)->nullable();
+            $table->text('user_agent')->nullable();
+            $table->longText('payload');
+            $table->integer('last_activity')->index();
+        });
+
+        // Create users table for testing
+        $app['db']->connection()->getSchemaBuilder()->create('users', function ($table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->timestamps();
+        });
+    }
+
+    protected function defineRoutes($router)
+    {
+        // Define a login route for testing auth middleware redirects
+        $router->get('/login', function () {
+            return 'Login Page';
+        })->name('login');
     }
 }
