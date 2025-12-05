@@ -1,6 +1,6 @@
 {
     "name": "stanleykinkelaar/laravel-browser-sessions-lite",
-    "description": "A lightweight, zero-dependency Laravel package for managing browser sessions with device detection and secure logout",
+    "description": "A lightweight Laravel package for managing browser sessions with device detection and secure logout",
     "keywords": [
         "Stanley Kinkelaar",
         "laravel",
