@@ -62,6 +62,8 @@ class SessionRepository
 
     /**
      * Parse a simple device hint from user agent (zero dependencies).
+     *
+     * Detection order matters: specific patterns must be checked before generic ones.
      */
     protected function parseDeviceHint(string $userAgent): string
     {
@@ -69,7 +71,7 @@ class SessionRepository
             return 'Unknown Device';
         }
 
-        // Mobile detection
+        // Mobile OS detection (most specific first)
         if (preg_match('/(iPhone|iPad|iPod)/i', $userAgent)) {
             return 'iOS Device';
         }
@@ -82,11 +84,13 @@ class SessionRepository
             return 'Mobile Device';
         }
 
-        // Desktop browsers
+        // Desktop browser detection (check Edge and Chrome before Safari)
+        // Edge contains "Chrome" and "Safari" in UA
         if (preg_match('/Edg/i', $userAgent)) {
             return 'Edge Browser';
         }
 
+        // Chrome contains "Safari" in UA, so check before Safari
         if (preg_match('/Chrome/i', $userAgent)) {
             return 'Chrome Browser';
         }
@@ -95,10 +99,12 @@ class SessionRepository
             return 'Firefox Browser';
         }
 
+        // Check Safari last since Chrome/Edge UAs contain "Safari"
         if (preg_match('/Safari/i', $userAgent)) {
             return 'Safari Browser';
         }
 
+        // Operating system fallbacks
         if (preg_match('/(Windows|Win64|Win32)/i', $userAgent)) {
             return 'Windows PC';
         }

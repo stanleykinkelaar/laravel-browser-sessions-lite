@@ -50,18 +50,21 @@ class BrowserSessions
             ]);
         }
 
-        return $this->forceLogoutOthersForUser($user->id);
+        return $this->forceLogoutOthersForUser($user->id, $password);
     }
 
     /**
      * Force logout all other sessions for a specific user (admin use).
      */
-    public function forceLogoutOthersForUser(int $userId): int
+    public function forceLogoutOthersForUser(int $userId, ?string $password = null): int
     {
         $currentSessionId = $this->repository->getCurrentSessionId();
 
         // Logout other devices via Laravel's Auth guard
-        Auth::logoutOtherDevices(request()->password ?? '');
+        // Password is required by Laravel's logoutOtherDevices to rehash sessions
+        if ($password !== null) {
+            Auth::logoutOtherDevices($password);
+        }
 
         // Delete other session records from database
         return $this->repository->deleteOtherSessionsForUser($userId, $currentSessionId);
